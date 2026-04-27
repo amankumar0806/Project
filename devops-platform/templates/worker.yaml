@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker-helm
+spec:
+  replicas: {{ .Values.worker.replicas }}
+  selector:
+    matchLabels:
+      app: worker
+  template:
+    metadata:
+      labels:
+        app: worker
+    spec:
+      containers:
+      - name: worker
+        image: {{ .Values.worker.image }}
+
+        env:
+        - name: DB_HOST
+          value: mysql
+
+        - name: REDIS_HOST
+          value: redis

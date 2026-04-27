@@ -1,0 +1,81 @@
+# =========================
+# GLOBAL CONFIG
+# =========================
+namespace: default
+
+# =========================
+# FRONTEND
+# =========================
+frontend:
+  image: awsdevops0806/frontend
+  replicas: 2
+  service:
+    port: 3000
+    nodePort: 30008
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "128Mi"
+    limits:
+      cpu: "300m"
+      memory: "256Mi"
+
+# =========================
+# BACKEND
+# =========================
+backend:
+  image: awsdevops0806/backend:v3
+  replicas: 3
+  service:
+    port: 5000
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "128Mi"
+    limits:
+      cpu: "500m"
+      memory: "256Mi"
+
+# =========================
+# WORKER
+# =========================
+worker:
+  image: awsdevops0806/worker
+  replicas: 1
+
+# =========================
+# MYSQL (STATEFUL)
+# =========================
+mysql:
+  image: mysql:5.7
+  rootPassword: myamankumar
+  storage: 1Gi
+
+# =========================
+# REDIS
+# =========================
+redis:
+  image: redis:7
+  port: 6379
+
+# =========================
+# INGRESS
+# =========================
+ingress:
+  enabled: true
+  host: devops.local
+
+# =========================
+# HPA
+# =========================
+hpa:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 5
+  cpuUtilization: 50
+
+# =========================
+# SECURITY
+# =========================
+security:
+  serviceAccountName: backend-sa

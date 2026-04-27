@@ -1,0 +1,11 @@
+frontend:
+  replicas: 3
+
+backend:
+  replicas: 3
+
+hpa:
+  enabled: true
+
+ingress:
+  host: devops.local
