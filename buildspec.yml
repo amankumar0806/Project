@@ -25,7 +25,7 @@ phases:
       - docker tag $IMAGE_NAME:$IMAGE_TAG $DOCKER_USER/$IMAGE_NAME:$IMAGE_TAG
       - docker push $DOCKER_USER/$IMAGE_NAME:$IMAGE_TAG
 
-      - sed -i "s/tag:.*/tag: \"$IMAGE_TAG\"/" devops-platform/values.yaml
+      - 'sed -i "s/tag:.*/tag: \"'"$IMAGE_TAG"'\"/" devops-platform/values.yaml'
 
       - git config --global user.email ci@company.com
       - git config --global user.name ci-bot
