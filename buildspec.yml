@@ -8,9 +8,9 @@ phases:
   pre_build:
     commands:
       - echo "Logging into DockerHub"
-      - docker login -u $DOCKER_USER -p $DOCKER_PASS
-      - COMMIT_ID=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
-      - IMAGE_TAG=$COMMIT_ID
+      - "docker login -u $DOCKER_USER -p $DOCKER_PASS"
+      - "COMMIT_ID=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)"
+      - "IMAGE_TAG=$COMMIT_ID"
       - echo "Image tag: $IMAGE_TAG"
 
 
