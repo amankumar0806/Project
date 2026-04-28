@@ -29,7 +29,7 @@ def api():
     cached_value = cache.get("visits")
 
     if cached_value:
-        return f"(From Cache) Visits: {cached_value}"
+        return f"(NEW VERSION) (From Cache) Visits: {cached_value}"
 
     # If not in cache → go to DB
     cursor.execute("UPDATE visits SET count = count + 1")
@@ -41,7 +41,7 @@ def api():
     # Store in cache
     cache.setex("visits", 10, count)  # expires in 10 sec
 
-    return f"(From DB) Visits: {count}"
+    return f"(NEW VERSION) (From DB) Visits: {count}"
 
 @app.route("/health")
 def health():

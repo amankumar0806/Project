@@ -24,7 +24,8 @@ frontend:
 # BACKEND
 # =========================
 backend:
-  image: awsdevops0806/backend:v3
+  repository: awsdevops0806/backend
+  tag: "v3"
   replicas: 3
   service:
     port: 5000

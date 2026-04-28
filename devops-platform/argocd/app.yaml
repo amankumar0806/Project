@@ -7,9 +7,9 @@ spec:
   project: default
 
   source:
-    repoURL: https://github.com/amankumar0806/devops-platform.git
+    repoURL: https://github.com/amankumar0806/project.git
     targetRevision: main
-    path: .
+    path: devops-platform
 
   destination:
     server: https://kubernetes.default.svc
