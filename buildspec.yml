@@ -7,32 +7,29 @@ env:
 phases:
   pre_build:
     commands:
-      - echo "Logging into DockerHub"
-      - "docker login -u $DOCKER_USER -p $DOCKER_PASS"
-      - "COMMIT_ID=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)"
-      - "IMAGE_TAG=$COMMIT_ID"
-      - echo "Image tag: $IMAGE_TAG"
-
+      - echo Logging into DockerHub
+      - docker login -u $DOCKER_USER -p $DOCKER_PASS
+      - COMMIT_ID=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+      - IMAGE_TAG=$COMMIT_ID
+      - echo Image tag is $IMAGE_TAG
 
   build:
     commands:
-      - echo "Building backend image"
+      - echo Building backend image
       - cd backend
-      - "docker build -t $IMAGE_NAME:$IMAGE_TAG ."
+      - docker build -t $IMAGE_NAME:$IMAGE_TAG .
 
   post_build:
     commands:
-      - echo "Pushing image"
-      - "docker tag $IMAGE_NAME:$IMAGE_TAG $DOCKER_USER/$IMAGE_NAME:$IMAGE_TAG"
-      - "docker push $DOCKER_USER/$IMAGE_NAME:$IMAGE_TAG"
+      - echo Pushing image
+      - docker tag $IMAGE_NAME:$IMAGE_TAG $DOCKER_USER/$IMAGE_NAME:$IMAGE_TAG
+      - docker push $DOCKER_USER/$IMAGE_NAME:$IMAGE_TAG
 
-      #- sed -i "s/tag:.*/tag: \"$IMAGE_TAG\"/" devops-platform/values.yaml
-      - 'sed -i "/backend:/,/tag:/ s/tag:.*/tag: \"$IMAGE_TAG\"/" devops-platform/values.yaml'  
+      - sed -i "s/tag:.*/tag: \"$IMAGE_TAG\"/" devops-platform/values.yaml
 
-      - git config --global user.email "ci@company.com"
-      - git config --global user.name "ci-bot"
+      - git config --global user.email ci@company.com
+      - git config --global user.name ci-bot
 
       - git add devops-platform/values.yaml
-      - git commit -m "update backend image to $IMAGE_TAG"
-
+      - git commit -m "update backend image to $IMAGE_TAG" || echo no changes
       - git push https://$GITHUB_TOKEN@github.com/amankumar0806/Project.git HEAD:main
