@@ -24,9 +24,5 @@ phases:
       - echo Pushing image
       - docker tag $IMAGE_NAME:$IMAGE_TAG $DOCKER_USER/$IMAGE_NAME:$IMAGE_TAG
       - docker push $DOCKER_USER/$IMAGE_NAME:$IMAGE_TAG
-      - 'sed -i "s/tag:.*/tag: \"'"$IMAGE_TAG"'\"/" devops-platform/values.yaml'
-      - git config --global user.email ci@company.com
-      - git config --global user.name ci-bot
-      - git add devops-platform/values.yaml
-      - git commit -m "update backend image to $IMAGE_TAG" || echo no changes
-      - git push https://$GITHUB_TOKEN@github.com/amankumar0806/Project.git HEAD:main
+      - chmod +x scripts/update-values.sh
+      - ./scripts/update-values.sh
